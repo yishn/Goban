@@ -1,36 +1,4 @@
-console.log('IN SETTING.JS HERE FOR SOME REASON')
-const EventEmitter = require('events')
-const fs = require('fs')
-const path = require('path')
-const {app, BrowserWindow} = require('electron')
-
-const portableDir = process.env.PORTABLE_EXECUTABLE_DIR
-
-for (let dir of [
-  (exports.userDataDirectory = portableDir
-    ? path.join(portableDir, 'Sabaki')
-    : app.getPath('userData')),
-  (exports.themesDirectory = path.join(exports.userDataDirectory, 'themes'))
-]) {
-  try {
-    fs.mkdirSync(dir)
-  } catch (err) {}
-}
-
-exports.settingsPath = path.join(exports.userDataDirectory, 'settings.json')
-exports.stylesPath = path.join(exports.userDataDirectory, 'styles.css')
-
-if (!fs.existsSync(exports.stylesPath)) {
-  fs.writeFileSync(
-    exports.stylesPath,
-    `/* This stylesheet is loaded when ${app.name} starts up. */`
-  )
-}
-
-let settings = {}
-
-let themesDict = null
-
+console.log('in module setting.js')
 let defaults = {
   'app.always_show_result': false,
   'app.enable_hardware_acceleration': true,
@@ -218,130 +186,24 @@ let defaults = {
   'window.maximized': false
 }
 
-let eventEmitters = {}
-
-exports.events = {
-  on: (id, event, f) => {
-    if (eventEmitters[id] == null) {
-      eventEmitters[id] = new EventEmitter()
-      eventEmitters[id].setMaxListeners(30)
-    }
-
-    eventEmitters[id].on(event, f)
-  },
-  emit: (event, evt) => {
-    let windows = BrowserWindow.getAllWindows()
-
-    for (let id in eventEmitters) {
-      if (!windows.some(window => window.id.toString() === id)) {
-        delete eventEmitters[id]
-      } else {
-        eventEmitters[id].emit(event, evt)
-      }
-    }
-  }
+function get(key) {
+  console.log('Mock setting.get ' + key + ' -> ' + defaults[key])
+  return defaults[key]
 }
 
-exports.load = function() {
-  try {
-    settings = JSON.parse(fs.readFileSync(exports.settingsPath, 'utf8'))
-  } catch (err) {
-    settings = {}
-  }
-
-  // Load default settings
-
-  for (let key in defaults) {
-    if (key in settings) continue
-    settings[key] = defaults[key]
-  }
-
-  // Delete invalid settings
-
-  for (let key in settings) {
-    if (key in defaults) continue
-    delete settings[key]
-  }
-
-  // Overwrite settings
-
-  for (let overwriteKey in settings) {
-    if (overwriteKey.indexOf('setting.overwrite.') != 0) continue
-
-    let overwrites = settings[overwriteKey]
-    if (!overwrites.length) continue
-
-    for (let i = 0; i < overwrites.length; i++) {
-      settings[overwrites[i]] = defaults[overwrites[i]]
-    }
-
-    settings[overwriteKey] = []
-  }
-
-  return exports.save()
-}
-
-exports.loadThemes = function() {
-  let packagePath = filename =>
-    path.join(exports.themesDirectory, filename, 'package.json')
-  let friendlyName = name =>
-    name
-      .split('-')
-      .map(x => (x === '' ? x : x[0].toUpperCase() + x.slice(1).toLowerCase()))
-      .join(' ')
-
-  themesDict = fs
-    .readdirSync(exports.themesDirectory)
-    .map(x => {
-      try {
-        return Object.assign({}, require(packagePath(x)), {
-          id: x,
-          path: path.join(packagePath(x), '..')
-        })
-      } catch (err) {
-        return null
-      }
-    })
-    .reduce((acc, x) => {
-      if (x == null) return acc
-
-      x.name = friendlyName(x.name)
-      acc[x.id] = x
-      return acc
-    }, {})
-}
-
-exports.save = function() {
-  let keys = Object.keys(settings).sort()
-
-  fs.writeFileSync(
-    exports.settingsPath,
-    JSON.stringify(
-      keys.reduce((acc, key) => ((acc[key] = settings[key]), acc), {}),
-      null,
-      '  '
-    )
-  )
-
-  return exports
-}
-
-exports.get = function(key) {
-  if (key in settings) return settings[key]
-  if (key in defaults) return defaults[key]
+function set(key, value) {
+  console.log('Mock setting.get ' + key + ' -> ' + value)
   return null
 }
 
-exports.set = function(key, value) {
-  settings[key] = value
-  exports.save()
-  exports.events.emit('change', {key, value})
-  return exports
+/*
+export default {
+  get: get,
+  set: set
 }
-
-exports.getThemes = function() {
-  if (themesDict == null) exports.loadThemes()
-  return themesDict
+*/
+exports.get = get
+exports.set = set
+exports.getThemes = () => {
+  return {}
 }
-
-exports.load()

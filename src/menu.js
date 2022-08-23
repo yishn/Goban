@@ -1,18 +1,33 @@
+console.log('In menu.js')
 const nativeRequire = eval('require')
 
 const {shell, clipboard} = require('electron')
-var remote = null
-try {
-  remote = require('@electron/remote')
-} catch (e) {}
-const isRenderer = remote != null
-const {app} = isRenderer ? remote : require('electron')
+const isRenderer =
+  typeof window !== 'undefined' &&
+  typeof window.process === 'object' &&
+  window.process.type === 'renderer'
+console.log('In menu.js, isRenderer is: ' + isRenderer)
+// TODO Fix this
+const {app} = isRenderer
+  ? {
+      app: {
+        name: 'TODO name',
+        getVersion: () => {
+          return '1.2.3'
+        },
+        quit: () => {
+          return
+        }
+      }
+    }
+  : require('electron')
+console.log('In menu.js, app is: ' + app)
 
 const i18n = require('./i18n')
 const sabaki = isRenderer ? require('./modules/sabaki').default : null
 const dialog = isRenderer ? require('./modules/dialog') : null
 const setting = isRenderer
-  ? remote.require('./setting')
+  ? require('./modules/setting')
   : nativeRequire('./setting')
 
 exports.get = function(props = {}) {

@@ -1,10 +1,9 @@
 import {join} from 'path'
-import * as remote from '@electron/remote'
 import {h, Component} from 'preact'
 import sabaki from '../modules/sabaki.js'
+import setting from '../modules/setting.js'
 import ColorThief from '@mariotacke/color-thief'
 
-const setting = remote.require('./setting')
 const colorThief = new ColorThief()
 
 async function getColorFromPath(path) {
@@ -27,9 +26,12 @@ export default class ThemeManager extends Component {
 
     this.updateSettingState()
 
+    // TODO: Fix this reference to setting.events
+    /*
     setting.events.on(sabaki.window.id, 'change', ({key}) =>
       this.updateSettingState(key)
     )
+    */
   }
 
   shouldComponentUpdate(_, state) {

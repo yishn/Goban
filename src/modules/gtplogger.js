@@ -1,13 +1,12 @@
-import * as remote from '@electron/remote'
 import winston from 'winston'
 import {resolve, join} from 'path'
 
 import i18n from '../i18n.js'
 import {showMessageBox} from './dialog.js'
 import * as helper from './helper.js'
+import setting from './setting.js'
 
 const t = i18n.context('gtplogger')
-const setting = remote.require('./setting')
 
 let filename = null
 
@@ -93,7 +92,9 @@ export function updatePath() {
   if (filename == null) {
     // Generate a new log file name
 
-    let pid = remote.getCurrentWebContents().getOSProcessId()
+    // TODO: Fix pid fetching
+    // let pid = remote.getCurrentWebContents().getOSProcessId()
+    let pid = 1337
     filename = `sabaki_${timestamp()}_${pid}.log`
   }
 

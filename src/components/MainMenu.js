@@ -1,6 +1,5 @@
 import {Component} from 'preact'
 import {ipcRenderer} from 'electron'
-import * as remote from '@electron/remote'
 import * as dialog from '../modules/dialog.js'
 import * as menu from '../menu.js'
 
@@ -9,7 +8,8 @@ export default class MainMenu extends Component {
     super(props)
 
     this.menuData = menu.get()
-    this.window = remote.getCurrentWindow()
+    //this.window = remote.getCurrentWindow()
+    this.window = window
     this.listeners = {}
 
     this.buildMenu = () => {
@@ -18,7 +18,8 @@ export default class MainMenu extends Component {
   }
 
   componentDidMount() {
-    this.window.on('focus', this.buildMenu)
+    // TODO: Figure this out
+    // this.window.on('focus', this.buildMenu)
 
     let handleMenuClicks = menu => {
       for (let item of menu) {

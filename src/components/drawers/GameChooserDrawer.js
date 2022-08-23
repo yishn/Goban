@@ -1,4 +1,3 @@
-import * as remote from '@electron/remote'
 import {h, Component} from 'preact'
 import classNames from 'classnames'
 
@@ -7,6 +6,7 @@ import Drawer from './Drawer.js'
 
 import i18n from '../../i18n.js'
 import sabaki from '../../modules/sabaki.js'
+import setting from '../../modules/setting.js'
 import * as dialog from '../../modules/dialog.js'
 import * as fileformats from '../../modules/fileformats/index.js'
 import * as gametree from '../../modules/gametree.js'
@@ -14,7 +14,6 @@ import * as gamesort from '../../modules/gamesort.js'
 import * as helper from '../../modules/helper.js'
 
 const t = i18n.context('GameChooserDrawer')
-const setting = remote.require('./setting')
 
 let thumbnailSize = setting.get('gamechooser.thumbnail_size')
 let itemMinWidth = thumbnailSize + 12 + 20

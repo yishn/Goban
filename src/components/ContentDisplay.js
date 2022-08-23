@@ -1,12 +1,11 @@
 import {shell} from 'electron'
-import * as remote from '@electron/remote'
 import {h, Component} from 'preact'
 
 import i18n from '../i18n.js'
 import sabaki from '../modules/sabaki.js'
+import setting from '../modules/setting.js'
 
 const t = i18n.context('ContentDisplay')
-const setting = remote.require('./setting')
 
 function htmlify(input) {
   let urlRegex = /\b(ht|f)tps?:\/\/[^\s<]+[^<.,:;"\')\]\s](\/\B|\b)/i

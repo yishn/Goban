@@ -1,15 +1,14 @@
-import * as remote from '@electron/remote'
 import {h, Component} from 'preact'
 import classNames from 'classnames'
 import {parseVertex} from '@sabaki/sgf'
 
 import sabaki from '../../modules/sabaki.js'
+import setting from '../../modules/setting.js'
 import i18n from '../../i18n.js'
 
 import Bar from './Bar.js'
 
 const t = i18n.context('AutoplayBar')
-const setting = remote.require('./setting')
 
 let maxSecPerMove = setting.get('autoplay.max_sec_per_move')
 let secondsPerMove = setting.get('autoplay.sec_per_move')

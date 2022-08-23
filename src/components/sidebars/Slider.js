@@ -1,8 +1,6 @@
-import * as remote from '@electron/remote'
 import {h, Component} from 'preact'
+import setting from '../../modules/setting.js'
 import * as helper from '../../modules/helper.js'
-
-const setting = remote.require('./setting')
 
 class Slider extends Component {
   constructor() {

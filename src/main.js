@@ -11,7 +11,6 @@ const {resolve} = require('path')
 const i18n = require('./i18n')
 const setting = require('./setting')
 const updater = require('./updater')
-require('@electron/remote/main').initialize()
 
 let windows = []
 let openfile = null
@@ -29,12 +28,13 @@ function newWindow(path) {
     backgroundColor: '#111111',
     show: false,
     webPreferences: {
+      preload: resolve(__dirname, 'preload.js'),
       nodeIntegration: true,
       contextIsolation: false,
-      enableRemoteModule: true,
       zoomFactor: setting.get('app.zoom_factor')
     }
   })
+  window.webContents.openDevTools()
 
   windows.push(window)
   buildMenu()
@@ -111,7 +111,8 @@ function buildMenu(props = {}) {
     })
   }
 
-  Menu.setApplicationMenu(Menu.buildFromTemplate(processMenu(template)))
+  // TODO: Add back menu
+  // Menu.setApplicationMenu(Menu.buildFromTemplate(processMenu(template)))
 
   // Create dock menu
 

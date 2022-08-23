@@ -1,16 +1,15 @@
-import * as remote from '@electron/remote'
 import {h, Component} from 'preact'
 import classNames from 'classnames'
 import sgf from '@sabaki/sgf'
 import {BoundedGoban} from '@sabaki/shudan'
 
 import i18n from '../i18n.js'
+import setting from '../modules/setting.js'
 import * as gametree from '../modules/gametree.js'
 import * as gobantransformer from '../modules/gobantransformer.js'
 import * as helper from '../modules/helper.js'
 
 const t = i18n.context('Goban')
-const setting = remote.require('./setting')
 const alpha = 'ABCDEFGHJKLMNOPQRSTUVWXYZ'
 
 export default class Goban extends Component {

@@ -1,7 +1,5 @@
-import * as remote from '@electron/remote'
 import {wait} from './helper.js'
-
-const setting = remote.require('./setting')
+import setting from './setting.js'
 
 function prepareFunction(sounds) {
   let lastIndex = -1

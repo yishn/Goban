@@ -1,10 +1,8 @@
-import * as remote from '@electron/remote'
 import {h, Component} from 'preact'
 import classNames from 'classnames'
 import * as gametree from '../../modules/gametree.js'
+import setting from '../../modules/setting.js'
 import {vertexEquals, noop} from '../../modules/helper.js'
-
-const setting = remote.require('./setting')
 
 let delay = setting.get('graph.delay')
 let commentProperties = setting.get('sgf.comment_properties')

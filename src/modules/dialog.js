@@ -1,10 +1,10 @@
-import * as remote from '@electron/remote'
 import i18n from '../i18n.js'
 import sabaki from './sabaki.js'
 import {noop} from './helper.js'
 
 const t = i18n.context('dialog')
-const {app, dialog} = remote
+// TODO fix this
+// const {app, dialog} = remote
 
 export function showMessageBox(
   message,
@@ -17,7 +17,7 @@ export function showMessageBox(
   let result = dialog.showMessageBoxSync(remote.getCurrentWindow(), {
     type,
     buttons,
-    title: app.name,
+    title: 'TODO',
     message,
     cancelId,
     noLink: true

@@ -1,4 +1,3 @@
-import * as remote from '@electron/remote'
 import EventEmitter from 'events'
 import {existsSync} from 'fs'
 import {dirname, resolve} from 'path'
@@ -12,9 +11,9 @@ import {parseCompressedVertices} from '@sabaki/sgf'
 import i18n from '../i18n.js'
 import {getBoard, getRootProperty} from './gametree.js'
 import {noop, equals} from './helper.js'
+import setting from './setting.js'
 
 const t = i18n.context('EngineSyncer')
-const setting = remote.require('./setting')
 
 const alpha = 'ABCDEFGHJKLMNOPQRSTUVWXYZ'
 const quitTimeout = setting.get('gtp.engine_quit_timeout')

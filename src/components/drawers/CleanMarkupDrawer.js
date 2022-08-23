@@ -1,14 +1,13 @@
-import * as remote from '@electron/remote'
 import {h, Component} from 'preact'
 
 import i18n from '../../i18n.js'
 import sabaki from '../../modules/sabaki.js'
+import setting from '../../modules/setting.js'
 import {wait, popupMenu} from '../../modules/helper.js'
 
 import Drawer from './Drawer.js'
 
 const t = i18n.context('CleanMarkupDrawer')
-const setting = remote.require('./setting')
 
 class CleanMarkupItem extends Component {
   constructor() {

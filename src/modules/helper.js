@@ -102,15 +102,17 @@ export function isTextLikeElement(element) {
 }
 
 export function popupMenu(template, x, y) {
-  const remote = require('@electron/remote')
-
-  let setting = remote.require('./setting')
+  /*
+  let setting = require('./setting')
   let zoomFactor = +setting.get('app.zoom_factor')
-
+  */
+  // TODO: build menu
+  /*
   remote.Menu.buildFromTemplate(template).popup({
     x: Math.round(x * zoomFactor),
     y: Math.round(y * zoomFactor)
   })
+  */
 }
 
 export function wait(ms) {

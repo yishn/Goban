@@ -1,5 +1,4 @@
 import {ipcRenderer} from 'electron'
-import * as remote from '@electron/remote'
 import {h, render, Component} from 'preact'
 import classNames from 'classnames'
 import fixPath from 'fix-path'
@@ -19,11 +18,11 @@ import InfoOverlay from './InfoOverlay.js'
 
 import i18n from '../i18n.js'
 import sabaki from '../modules/sabaki.js'
+import setting from '../modules/setting.js'
 import * as gametree from '../modules/gametree.js'
 import * as gtplogger from '../modules/gtplogger.js'
 import * as helper from '../modules/helper.js'
 
-const setting = remote.require('./setting')
 const t = i18n.context('App')
 
 const leftSidebarMinWidth = setting.get('view.sidebar_minwidth')
@@ -66,6 +65,7 @@ class App extends Component {
       )
     })
 
+    debugger
     sabaki.window.on('focus', () => {
       if (setting.get('file.show_reload_warning')) {
         sabaki.askForReload()

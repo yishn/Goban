@@ -1,7 +1,6 @@
 import fs from 'fs'
 import EventEmitter from 'events'
 import {basename, extname} from 'path'
-import * as remote from '@electron/remote'
 import {h} from 'preact'
 import {v4 as uuid} from 'uuid'
 
@@ -11,6 +10,7 @@ import gtp from '@sabaki/gtp'
 import sgf from '@sabaki/sgf'
 
 import i18n from '../i18n.js'
+import setting from './setting.js'
 import EngineSyncer from './enginesyncer.js'
 import * as dialog from './dialog.js'
 import * as fileformats from './fileformats/index.js'
@@ -21,9 +21,6 @@ import * as helper from './helper.js'
 import * as sound from './sound.js'
 
 deadstones.useFetch('./node_modules/@sabaki/deadstones/wasm/deadstones_bg.wasm')
-
-const {app} = remote
-const setting = remote.require('./setting')
 
 class Sabaki extends EventEmitter {
   constructor() {
@@ -111,9 +108,9 @@ class Sabaki extends EventEmitter {
     }
 
     this.events = new EventEmitter()
-    this.appName = app.name
-    this.version = app.getVersion()
-    this.window = remote.getCurrentWindow()
+    this.appName = 'TODO app.name'
+    this.version = 'TODO app.getVersion'
+    //this.window = remote.getCurrentWindow()
 
     this.treeHash = this.generateTreeHash()
     this.historyPointer = 0
@@ -122,9 +119,12 @@ class Sabaki extends EventEmitter {
 
     // Bind state to settings
 
+    // TODO fix this
+    /*
     setting.events.on(this.window.id, 'change', ({key, value}) => {
       this.updateSettingState(key)
     })
+    */
 
     this.updateSettingState()
   }
@@ -492,7 +492,8 @@ class Sabaki extends EventEmitter {
 
       gameTrees = fileFormatModule.parseFile(filename, evt => {
         if (evt.progress - lastProgress < 0.1) return
-        this.window.setProgressBar(evt.progress)
+        // TODO fix progress
+        // this.window.setProgressBar(evt.progress)
         lastProgress = evt.progress
       })
 
@@ -532,7 +533,8 @@ class Sabaki extends EventEmitter {
 
       gameTrees = fileFormatModule.parse(content, evt => {
         if (evt.progress - lastProgress < 0.1) return
-        this.window.setProgressBar(evt.progress)
+        // TODO fix progress
+        // this.window.setProgressBar(evt.progress)
         lastProgress = evt.progress
       })
 
@@ -582,7 +584,7 @@ class Sabaki extends EventEmitter {
     }
 
     this.setBusy(false)
-    this.window.setProgressBar(-1)
+    // this.window.setProgressBar(-1)
     this.events.emit('fileLoad')
 
     if (gameTrees.length > 1) {

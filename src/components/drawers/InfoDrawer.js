@@ -1,10 +1,10 @@
-import * as remote from '@electron/remote'
 import classNames from 'classnames'
 import {h, Component, toChildArray} from 'preact'
 import Pikaday from 'pikaday'
 import {parseDates, stringifyDates} from '@sabaki/sgf'
 
 import sabaki from '../../modules/sabaki.js'
+import setting from '../../modules/setting.js'
 import {
   popupMenu,
   shallowEquals,
@@ -16,7 +16,6 @@ import i18n from '../../i18n.js'
 import Drawer from './Drawer.js'
 
 const t = i18n.context('InfoDrawer')
-const setting = remote.require('./setting')
 
 class InfoDrawerItem extends Component {
   render({title, children}) {

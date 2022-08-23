@@ -1,6 +1,5 @@
 import {existsSync} from 'fs'
 import {shell} from 'electron'
-import * as remote from '@electron/remote'
 import {h, Component} from 'preact'
 import classNames from 'classnames'
 import {join} from 'path'
@@ -11,12 +10,12 @@ import natsort from 'natsort'
 
 import i18n from '../../i18n.js'
 import sabaki from '../../modules/sabaki.js'
+import setting from '../../modules/setting.js'
 import {showOpenDialog, showMessageBox} from '../../modules/dialog.js'
 import {noop, isWritableDirectory} from '../../modules/helper.js'
 import * as gtplogger from '../../modules/gtplogger.js'
 import Drawer from './Drawer.js'
 
-const setting = remote.require('./setting')
 const t = i18n.context('PreferencesDrawer')
 
 class PreferencesItem extends Component {
@@ -35,11 +34,14 @@ class PreferencesItem extends Component {
       onChange(Object.assign({checked}, this.props))
     }
 
+    // TODO: Fix reference to settings.events.on
+    /*
     setting.events.on(sabaki.window.id, 'change', ({key, value}) => {
       if (key === this.props.id) {
         this.setState({checked: value})
       }
     })
+    */
   }
 
   render({text}, {checked}) {
@@ -97,6 +99,8 @@ class GeneralTab extends Component {
       setting.set('board.variation_replay_mode', evt.currentTarget.value)
     }
 
+    /* Fix reference to settings.events.on */
+    /*
     setting.events.on(sabaki.window.id, 'change', ({key, value}) => {
       if (key === 'app.lang') {
         this.setState({appLang: value})
@@ -104,6 +108,7 @@ class GeneralTab extends Component {
         this.setState({variationReplayMode: value})
       }
     })
+    */
   }
 
   render({graphGridSize}) {
@@ -336,11 +341,14 @@ class PathInputItem extends Component {
       this.handlePathChange({currentTarget: {value: result[0]}})
     }
 
+    /* Fix reference to settings.events.on */
+    /*
     setting.events.on(sabaki.window.id, 'change', ({key, value}) => {
       if (key === this.props.id) {
         this.setState({value: value})
       }
     })
+    */
   }
 
   shouldComponentUpdate({text}, {value}) {
@@ -457,11 +465,14 @@ class ThemesTab extends Component {
       })
     }
 
+    /* Fix reference to settings.events.on */
+    /*
     setting.events.on(sabaki.window.id, 'change', ({key, value}) => {
       if (key === 'theme.current') {
         this.setState({currentTheme: value})
       }
     })
+    */
   }
 
   render() {
