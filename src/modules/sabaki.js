@@ -2581,6 +2581,8 @@ class Sabaki extends EventEmitter {
   // Menus
 
   openNodeMenu(treePosition, {x, y} = {}) {
+    let commentMenu = this.getCommentMenuTemplate(treePosition)
+
     let t = i18n.context('menu.edit')
     let template = [
       {
@@ -2620,6 +2622,21 @@ class Sabaki extends EventEmitter {
       {
         label: t('Remove &Other Variations'),
         click: () => this.removeOtherVariations(treePosition)
+      },
+      {type: 'separator'},
+      {
+        label: t('Show Co&mments'),
+        click: () => {
+          setting.toggle('view.show_comments')
+          this.setState(({showCommentBox}) => ({
+            showCommentBox: !showCommentBox
+          }))
+        }
+      },
+      {type: 'separator'},
+      {
+        label: 'Annotate',
+        submenu: commentMenu
       }
     ]
 
@@ -2627,6 +2644,12 @@ class Sabaki extends EventEmitter {
   }
 
   openCommentMenu(treePosition, {x, y} = {}) {
+    let template = this.getCommentMenuTemplate(treePosition)
+
+    helper.popupMenu(template, x, y)
+  }
+
+  getCommentMenuTemplate(treePosition) {
     let t = i18n.context('menu.comment')
     let node = this.inferredState.gameTree.get(treePosition)
 
@@ -2710,7 +2733,7 @@ class Sabaki extends EventEmitter {
       item.click = () => this.setComment(treePosition, item.data)
     }
 
-    helper.popupMenu(template, x, y)
+    return template
   }
 
   openVariationMenu(
