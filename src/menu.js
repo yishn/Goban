@@ -16,7 +16,6 @@ const setting = isRenderer
   : nativeRequire('./setting')
 
 exports.get = function(props = {}) {
-  let toggleSetting = key => setting.set(key, !setting.get(key))
   let selectTool = tool => (
     sabaki.setMode('edit'), sabaki.setState({selectedTool: tool})
   )
@@ -456,7 +455,7 @@ exports.get = function(props = {}) {
           type: 'checkbox',
           checked: !!showLeftSidebar,
           click: () => {
-            toggleSetting('view.show_leftsidebar')
+            setting.toggle('view.show_leftsidebar')
             sabaki.setState(({showLeftSidebar}) => ({
               showLeftSidebar: !showLeftSidebar
             }))
@@ -563,7 +562,7 @@ exports.get = function(props = {}) {
       submenu: [
         {
           label: i18n.t('menu.view', 'Toggle Menu &Bar'),
-          click: () => toggleSetting('view.show_menubar')
+          click: () => setting.toggle('view.show_menubar')
         },
         {
           label: i18n.t('menu.view', 'Toggle &Full Screen'),
@@ -581,7 +580,7 @@ exports.get = function(props = {}) {
               accelerator: 'CmdOrCtrl+Shift+C',
               type: 'checkbox',
               checked: !showCoordinates,
-              click: () => toggleSetting('view.show_coordinates')
+              click: () => setting.toggle('view.show_coordinates')
             },
             {type: 'separator'},
             {
@@ -617,25 +616,25 @@ exports.get = function(props = {}) {
           label: i18n.t('menu.view', 'Show Move N&umbers'),
           type: 'checkbox',
           checked: !!showMoveNumbers,
-          click: () => toggleSetting('view.show_move_numbers')
+          click: () => setting.toggle('view.show_move_numbers')
         },
         {
           label: i18n.t('menu.view', 'Show Move Colori&zation'),
           type: 'checkbox',
           checked: !!showMoveColorization,
-          click: () => toggleSetting('view.show_move_colorization')
+          click: () => setting.toggle('view.show_move_colorization')
         },
         {
           label: i18n.t('menu.view', 'Show &Next Moves'),
           type: 'checkbox',
           checked: !!showNextMoves,
-          click: () => toggleSetting('view.show_next_moves')
+          click: () => setting.toggle('view.show_next_moves')
         },
         {
           label: i18n.t('menu.view', 'Show &Sibling Variations'),
           type: 'checkbox',
           checked: !!showSiblings,
-          click: () => toggleSetting('view.show_siblings')
+          click: () => setting.toggle('view.show_siblings')
         },
         {
           label: i18n.t('menu.view', 'Show &Heatmap'),
@@ -645,7 +644,7 @@ exports.get = function(props = {}) {
               type: 'checkbox',
               checked: !showAnalysis,
               accelerator: 'CmdOrCtrl+H',
-              click: () => toggleSetting('board.show_analysis')
+              click: () => setting.toggle('board.show_analysis')
             },
             {type: 'separator'},
             {
@@ -687,7 +686,7 @@ exports.get = function(props = {}) {
           checked: !!showWinrateGraph,
           enabled: !!showGameGraph || !!showCommentBox,
           click: () => {
-            toggleSetting('view.show_winrategraph')
+            setting.toggle('view.show_winrategraph')
             sabaki.setState(({showWinrateGraph}) => ({
               showWinrateGraph: !showWinrateGraph
             }))
@@ -699,7 +698,7 @@ exports.get = function(props = {}) {
           checked: !!showGameGraph,
           accelerator: 'CmdOrCtrl+T',
           click: () => {
-            toggleSetting('view.show_graph')
+            setting.toggle('view.show_graph')
             sabaki.setState(({showGameGraph}) => ({
               showGameGraph: !showGameGraph
             }))
@@ -711,7 +710,7 @@ exports.get = function(props = {}) {
           checked: !!showCommentBox,
           accelerator: 'CmdOrCtrl+Shift+T',
           click: () => {
-            toggleSetting('view.show_comments')
+            setting.toggle('view.show_comments')
             sabaki.setState(({showCommentBox}) => ({
               showCommentBox: !showCommentBox
             }))
